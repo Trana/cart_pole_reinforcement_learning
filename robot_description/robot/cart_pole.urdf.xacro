@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot name="cart_pole" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.14159274"/>
+
+  <xacro:include filename="$(find robot_description)/urdf/base/base.urdf.xacro"/>
+  <xacro:include filename="$(find robot_description)/urdf/cart/cart.urdf.xacro"/>
+  <xacro:include filename="$(find robot_description)/urdf/pole/pole.urdf.xacro"/>
+  <xacro:include filename="$(find robot_description)/urdf/tip/tip.urdf.xacro"/>
+
+  <!-- =============== Link & Joint =============== -->
+  <!-- Base -->
+  <link name="base_footprint"/>
+  <xacro:base_v0 parent="base_footprint">
+	<origin xyz="0 0 0"/>
+  </xacro:base_v0>
+
+  <!-- Yaw_joint -->
+  <xacro:cart_v0 parent="base_link">
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	<axis xyz="1 0 0"/>
+  </xacro:cart_v0>
+
+  <!-- Pitch_joint -->
+  <xacro:pole_v0 parent="cart_link">
+	<origin xyz="0 0.1 0" rpy="0 ${M_PI} 0"/>
+	<axis xyz="0 1 0"/>
+  </xacro:pole_v0> 
+
+  <xacro:tip_v0 parent="pole_link">
+    <origin xyz="0 0 -1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </xacro:tip_v0>
+  
+  <!-- =============== Transmissions =============== -->
+  <xacro:cart_trans_v0/>
+
+  <!-- =============== Gazebo =============== -->
+  <gazebo>
+    <plugin name="reinforcement_learning::ModelResetPlugin" filename="libmodel_reset_plugin.dylib"/>
+    <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.dylib">
+      <parameters>$(find robot_control)/config/controller.yaml</parameters>
+    </plugin>
+    <plugin
+      filename="gz-sim-pose-publisher-system"
+      name="gz::sim::systems::PosePublisher">
+      <update_frequency>200</update_frequency>
+      <publish_link_pose>true</publish_link_pose>
+      <use_pose_vector_msg>true</use_pose_vector_msg>
+      <publish_nested_model_pose>true</publish_nested_model_pose>
+    </plugin> 
+  </gazebo>
+
+  <ros2_control name="fws" type="system">
+    <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="cart_joint">
+      <!-- <command_interface name="velocity">
+        <param name="min">-200</param>
+        <param name="max">200</param>
+      </command_interface> -->
+      <command_interface name="position">
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>     
+    <!-- <joint name="pole_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>      -->
+  </ros2_control>
+
+  
+  
+  <xacro:base_gazebo_v0/>
+  <xacro:cart_gazebo_v0/>
+  <xacro:pole_gazebo_v0/>
+  <xacro:tip_gazebo_v0/>
+
+</robot>
