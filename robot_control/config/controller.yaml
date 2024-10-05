@@ -4,8 +4,8 @@
 
 controller_manager:
   ros__parameters:
-    publish_rate: 200
-    update_rate: 200
+    publish_rate: 1000
+    update_rate: 1000
 
     # TODO MUST FIX THIS
     use_sim_time: true
@@ -14,12 +14,15 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     joint_position_controller:
-  
+      publish_rate: 1000
+      update_rate: 1000
       type: position_controllers/JointGroupPositionController
    
 
 joint_position_controller:
   ros__parameters:
+    publish_rate: 1000
+    update_rate: 1000
     joints:
       - cart_joint
 
