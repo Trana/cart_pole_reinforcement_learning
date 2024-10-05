@@ -28,7 +28,7 @@ paused = False
 # Q-learning parameters
 steps = 1000
 n_episodes = 300
-nrOfBins = 4
+nrOfBins = 6
 gamma = 0.99
 alpha = 0.7
 
