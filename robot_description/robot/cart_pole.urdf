@@ -132,7 +132,7 @@
       <parameters>/Users/mikaeltrana/Development/Robots/Learning/cart_pole/install/robot_control/share/robot_control/config/controller.yaml</parameters>
     </plugin>
     <plugin filename="gz-sim-pose-publisher-system" name="gz::sim::systems::PosePublisher">
-      <update_frequency>200</update_frequency>
+      <update_frequency>800</update_frequency>
       <publish_link_pose>true</publish_link_pose>
       <use_pose_vector_msg>true</use_pose_vector_msg>
       <publish_nested_model_pose>true</publish_nested_model_pose>
@@ -161,8 +161,8 @@
   </ros2_control>
   <gazebo reference="base_link">
     <selfCollide>false</selfCollide>
-    <!-- <mu1 value="0.05" />
-      <mu2 value="0.05" /> -->
+    <mu1 value="0.05"/>
+    <mu2 value="0.05"/>
   </gazebo>
   <gazebo reference="cart_link">
     <selfCollide>false</selfCollide>
