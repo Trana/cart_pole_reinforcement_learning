@@ -6,5 +6,5 @@ from launch_ros.actions import Node
 def generate_launch_description():
 # pose_subscriber
   return LaunchDescription([
-          Node(package='commander', executable='q_learning.py', output='screen'),         
+          Node(package='commander', executable='ddqn_learning.py', output='screen'),         
       ])

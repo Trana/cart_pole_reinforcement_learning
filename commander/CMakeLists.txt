@@ -18,8 +18,20 @@ install(
 
 install(
     PROGRAMS
-    scripts/optimize_pid_learning.py
-    scripts/Q_learning.py
+    scripts/helpers/timing_test.py
+    scripts/pid_learning.py
+    scripts/q_learning.py
+    scripts/dqn_learning.py
+    scripts/ddqn_learning.py
+    scripts/common/pose_subscriber.py
+    scripts/common/replay_buffer.py
+    scripts/common/shared_state.py
+    scripts/common/training_config.py
+    scripts/common/fcq_network.py
+    scripts/common/strategies/e_greedy_exp_strategy.py
+    scripts/common/strategies/e_greedy_linear_strategy.py
+    scripts/common/strategies/e_greedy_strategy.py
+    scripts/common/strategies/greedy_strategy.py
     DESTINATION lib/${PROJECT_NAME}
   )
 

@@ -75,7 +75,7 @@ class PIDGainOptimizer(Node):
         global cart_pose_x
         global pole_tip_pose_z
 
-        self.paused = True
+        
         cart_pose = Pose()
         pole_pose = Pose()
         pole_twist = Twist()
@@ -90,7 +90,8 @@ class PIDGainOptimizer(Node):
         msg = Empty()
         self.pub_reset.publish(msg)
         
-        self.paused = False
+        while abs(cart_pose_x) > 0.005  or abs(y_rotation) > 0.005:
+            _=True
 
     def gain_evaluation(self, individual):
         global cart_pose
@@ -110,7 +111,7 @@ class PIDGainOptimizer(Node):
         Ki_p = individual[4]
         Kd_p = individual[5]
 
-        time_interval = 0.005
+        time_interval = 0.02
 
         # Reset simulation
         self.restart_cart_pole()
